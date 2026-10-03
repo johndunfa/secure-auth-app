@@ -44,7 +44,8 @@ const userSchema = new Schema<IUser>(
  * the hash is stripped automatically.
  */
 userSchema.set("toJSON", {
-  transform: (_doc: unknown, ret: Record<string, unknown>) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  transform: (_doc: any, ret: any) => {
     delete ret.passwordHash;
     delete ret.__v;
     return ret;
