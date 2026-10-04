@@ -63,6 +63,7 @@ const userSchema = new mongoose_1.Schema({
  * the hash is stripped automatically.
  */
 userSchema.set("toJSON", {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     transform: (_doc, ret) => {
         delete ret.passwordHash;
         delete ret.__v;
