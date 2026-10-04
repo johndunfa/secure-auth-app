@@ -6,9 +6,9 @@ A full-stack TypeScript authentication system built with Next.js, Express, and M
 
 | Service | URL |
 | :--- | :--- |
-| **Frontend (Vercel)** | `https://your-vercel-app.vercel.app` |
-| **Backend (Render)** | `https://your-render-app.onrender.com` |
-| **Health Check** | `https://your-render-app.onrender.com/api/health` |
+| **Frontend (Vercel)** | `https://secure-auth-app-skir-eosin.vercel.app/` |
+| **Backend (Render)** | `https://secure-auth-app-2.onrender.com/` |
+| **Health Check** | `https://secure-auth-app-2.onrender.com/api/health` |
 
 > ⚠️ **Note:** The backend runs on Render's free tier, which sleeps after 15 minutes of inactivity. The first request may take 30–60 seconds to wake up.
 
