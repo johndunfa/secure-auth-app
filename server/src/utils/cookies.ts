@@ -6,18 +6,27 @@ export const COOKIE_NAME = "auth_token";
 export const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
 
 /**
+ * Detect if we're running in a production HTTPS environment.
+ * Render sets NODE_ENV=production, but we also check the CLIENT_URL
+ * as a fallback in case the env var is missing.
+ */
+const isProduction =
+  process.env.NODE_ENV === "production" ||
+  (process.env.CLIENT_URL?.startsWith("https://") ?? false);
+
+/**
  * Cookie options for SETTING the auth cookie.
  *
- * - httpOnly  → JavaScript on the client cannot read it (XSS protection)
- * - secure    → only sent over HTTPS (auto-enabled in production)
- * - sameSite  → CSRF protection
- *     - "lax"  in dev  (localhost:3000 → localhost:5000, both http)
- *     - "none" in prod (requires HTTPS, needed for cross-site cookies)
+ * - httpOnly     → JS on the client cannot read it (XSS protection)
+ * - secure       → only sent over HTTPS (required for sameSite: "none")
+ * - sameSite     → "none" allows cross-site cookies (Vercel → Render)
+ * - partitioned  → required by Chrome for third-party cookies
  */
 export const cookieOptions = (): CookieOptions => ({
   httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  secure: isProduction,
+  sameSite: isProduction ? "none" : "lax",
+  partitioned: isProduction, // ✅ fixes Chrome's third-party cookie blocking
   maxAge: SEVEN_DAYS_MS,
   path: "/",
 });
